@@ -1,0 +1,7 @@
+I"e(function() {
+  this.search = function() {
+    return console.log("here");
+  };
+
+}).call(this);
+:ET

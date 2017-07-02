@@ -1,0 +1,63 @@
+I"](function() {
+  this.search = function() {
+    var input;
+    input = $('#search_input').val().toLowerCase();
+    return $('.book').each(function() {
+      var t;
+      t = $(this);
+      if (t.text().toLowerCase().includes(input)) {
+        return t.show();
+      } else {
+        return t.hide();
+      }
+    });
+  };
+
+  this.addAssociated = function(widget) {
+    var newFlds, regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(widget).data('id'), 'g');
+    newFlds = $(widget).data('fields').replace(regexp, time);
+    return $(widget).after(newFlds);
+  };
+
+  this.uppercase = function(str) {
+    var array1, newarray1, x;
+    array1 = str.split(' ');
+    newarray1 = [];
+    x = 0;
+    while (x < array1.length) {
+      newarray1.push(array1[x].charAt(0).toUpperCase() + array1[x].slice(1));
+      x++;
+    }
+    return newarray1.join(' ');
+  };
+
+  this.loadAuthors = function() {
+    return $.ajax({
+      url: "/authors.json",
+      type: "GET"
+    }).done(function(serverData) {
+      var author, b, i, k, results, title, v;
+      results = [];
+      for (k in serverData) {
+        v = serverData[k];
+        author = v["first_name"] + " " + v["last_name"];
+        results.push((function() {
+          var ref, results1;
+          ref = v["books"];
+          results1 = [];
+          for (i in ref) {
+            b = ref[i];
+            title = uppercase(author + " - " + b["title"]);
+            results1.push($('#book_list').append($('<li class="book"></li>').val(i).html(title)));
+          }
+          return results1;
+        })());
+      }
+      return results;
+    });
+  };
+
+}).call(this);
+:ET

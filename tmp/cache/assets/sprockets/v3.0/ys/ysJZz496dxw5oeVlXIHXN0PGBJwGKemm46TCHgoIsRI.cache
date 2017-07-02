@@ -1,0 +1,15 @@
+I"g(function() {
+  this.search = function() {
+    return console.log("here");
+  };
+
+  this.addAssociated = function(widget) {
+    var newFlds, regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(widget).data('id'), 'g');
+    newFlds = $(widget).data('fields').replace(regexp, time);
+    return $(widget).after(newFlds);
+  };
+
+}).call(this);
+:ET

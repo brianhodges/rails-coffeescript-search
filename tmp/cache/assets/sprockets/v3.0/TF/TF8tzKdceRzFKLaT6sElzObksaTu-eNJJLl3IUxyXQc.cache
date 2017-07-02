@@ -1,0 +1,31 @@
+I"Í(function() {
+  this.search = function() {
+    return console.log("here");
+  };
+
+  this.addAssociated = function(widget) {
+    var newFlds, regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(widget).data('id'), 'g');
+    newFlds = $(widget).data('fields').replace(regexp, time);
+    return $(widget).after(newFlds);
+  };
+
+  this.loadAuthors = function() {
+    return $.ajax({
+      url: "/authors.json",
+      type: "GET"
+    }).done(function(serverData) {
+      var books, k, results, v;
+      results = [];
+      for (k in serverData) {
+        v = serverData[k];
+        books = v["books"];
+        results.push(console.log(books));
+      }
+      return results;
+    });
+  };
+
+}).call(this);
+:ET

@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @author.first_name.capitalize %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @author.last_name.capitalize %>
+</p>
+
+<% if !@author.books.empty? %>
+<p>
+  <strong>Book(s):</strong><br>
+  <% @author.books.each do |b| %>
+    <%= b.title.capitalize.split.map(&:capitalize)*' ' %><br>
+  <% end %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', edit_author_path(@author) %> |
+<%= link_to 'Back', authors_path %>

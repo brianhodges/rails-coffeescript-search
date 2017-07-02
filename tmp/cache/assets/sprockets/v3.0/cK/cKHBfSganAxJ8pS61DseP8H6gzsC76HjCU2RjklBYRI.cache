@@ -1,0 +1,48 @@
+I"Á(function() {
+  this.search = function() {
+    var input;
+    console.log("here");
+    input = $('#search_input').val();
+    return $('#book_list').each(function() {
+      var t;
+      t = $(this);
+      if (t.text().search(input)) {
+        return console.log(t);
+      } else {
+        return t.hide()();
+      }
+    });
+  };
+
+  this.addAssociated = function(widget) {
+    var newFlds, regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(widget).data('id'), 'g');
+    newFlds = $(widget).data('fields').replace(regexp, time);
+    return $(widget).after(newFlds);
+  };
+
+  this.loadAuthors = function() {
+    return $.ajax({
+      url: "/authors.json",
+      type: "GET"
+    }).done(function(serverData) {
+      var author, b, i, k, ref, results, title, v;
+      results = [];
+      for (k in serverData) {
+        v = serverData[k];
+        author = v["first_name"] + " " + v["last_name"];
+        ref = v["books"];
+        for (i in ref) {
+          b = ref[i];
+          title = author + " - " + b["title"];
+          $('#book_list').append($('<li></li>').val(i).html(title));
+        }
+        results.push(console.log(v["books"]));
+      }
+      return results;
+    });
+  };
+
+}).call(this);
+:ET
